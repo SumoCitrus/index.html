@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Colonoscopy Prep — WMC Gastroenterology</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#00B4A6;--orange:#FF7043;--yellow:#FFD600;
+  --green:#66BB6A;--red:#EF5350;--blue:#42A5F5;
+  --purple:#AB47BC;--bg:#F5F0E8;--text:#2C2C2C;--card:#FFFDF9;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+.pg{display:none}
+.pg.on{display:block;animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* HOME */
+#pgHome{min-height:100vh;background:#F5EFE0;padding:40px 22px 54px;text-align:center}
+.home-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 80px)}
+.lang-toggle{display:flex;gap:0;background:#E8E0D0;border-radius:50px;padding:4px;margin-top:4px}
+.lang-tog-btn{background:none;border:none;border-radius:50px;padding:10px 24px;cursor:pointer;font-family:'Fredoka One',cursive;font-size:1rem;color:#888;transition:all .2s}
+.lang-tog-btn.active{background:white;color:#2C2C2C;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.home-icon{font-size:86px;margin-bottom:12px;filter:drop-shadow(0 4px 10px rgba(0,0,0,.12));animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.home-title{font-family:'Fredoka One',cursive;font-size:clamp(2rem,6vw,3.2rem);color:#2C2C2C;margin-bottom:5px;line-height:1.1}
+.home-sub{font-size:clamp(.87rem,2.5vw,1.05rem);color:#777;margin-bottom:5px;font-weight:700;font-style:italic}
+.home-org{font-size:.76rem;color:#bbb;font-weight:800;letter-spacing:.07em;text-transform:uppercase;margin-bottom:36px}
+.lang-btn{display:flex;align-items:center;justify-content:center;width:100%;max-width:340px;border:1.5px solid #E0D8C8;border-radius:18px;padding:20px 26px;cursor:pointer;font-family:'Fredoka One',cursive;box-shadow:0 4px 14px rgba(0,0,0,.09);transition:transform .2s,box-shadow .2s;margin-bottom:14px;background:white}
+.lang-btn:hover{transform:scale(1.03) translateY(-3px);box-shadow:0 10px 26px rgba(0,0,0,.14)}
+.lang-btn .ln{font-size:1.75rem}
+.lang-btn.en{color:#1565C0}.lang-btn.es{color:#BF360C}
+.home-note{margin-top:22px;color:#999;font-size:.85rem;font-weight:700;max-width:310px;line-height:1.6}
+
+/* menu styles now in #pgHome */
+.menu-title{font-family:'Fredoka One',cursive;font-size:clamp(1.45rem,5vw,2.3rem);color:#2C2C2C;margin-bottom:5px;line-height:1.2}
+.menu-sub{font-size:.9rem;color:#888;font-weight:700;margin-bottom:28px}
+.prep-btn{display:flex;align-items:center;gap:15px;width:100%;max-width:390px;border:1.5px solid #E0D8C8;border-radius:18px;padding:17px 20px;cursor:pointer;font-family:'Fredoka One',cursive;box-shadow:0 4px 13px rgba(0,0,0,.08);transition:transform .2s,box-shadow .2s;margin-bottom:12px;background:white;text-align:left}
+.prep-btn:hover{transform:scale(1.02) translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.13)}
+.pb-icon{font-size:1.95rem;flex-shrink:0}
+.pb-text{flex:1}
+.pb-title{font-size:1.08rem;display:block}
+.pb-sub{font-family:'Nunito',sans-serif;font-size:.75rem;font-weight:700;opacity:.58;display:block;margin-top:1px}
+.pb-arrow{font-size:1.1rem;opacity:.32}
+.prep-btn.m1{color:#0277BD}.prep-btn.m2{color:#00695C}
+.prep-btn.gl{color:#6A1B9A}.prep-btn.sp{color:#BF360C}
+.prep-btn.med{color:#37474F;border-color:#B0BEC5}
+.menu-divider{width:100%;max-width:390px;height:1px;background:#E0D8C8;margin:6px 0 14px}
+
+/* TIMELINE WRAPPER */
+.tlw{min-height:100vh;background:var(--bg);padding-bottom:80px}
+.tlh{background:linear-gradient(135deg,#00B4A6,#0097A7);padding:20px 18px 26px;text-align:center;position:relative}
+.tlh-back{position:absolute;left:13px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.2);border:none;border-radius:50%;width:40px;height:40px;font-size:1.15rem;cursor:pointer;color:white}
+.tlh-back:hover{background:rgba(255,255,255,.35)}
+.tlh-title{font-family:'Fredoka One',cursive;font-size:clamp(1.15rem,5vw,1.95rem);color:white;line-height:1.2}
+.tlh-sub{color:rgba(255,255,255,.82);font-size:clamp(.78rem,2.5vw,.9rem);margin-top:4px;font-weight:700}
+
+/* PROGRESS BAR */
+.prog-bar{display:flex;justify-content:center;align-items:center;padding:18px 14px 5px;overflow-x:auto;background:var(--bg)}
+.ps{display:flex;flex-direction:column;align-items:center;cursor:pointer;flex:1;max-width:72px}
+.pd{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;border:3px solid #ddd;background:white;transition:all .3s;box-shadow:0 2px 7px rgba(0,0,0,.09)}
+.ps.on .pd{border-color:var(--teal);background:var(--teal);transform:scale(1.12);box-shadow:0 4px 14px rgba(0,180,166,.4)}
+.ps.done .pd{border-color:var(--green);background:var(--green)}
+.pl{font-size:.54rem;font-weight:800;margin-top:4px;text-align:center;color:#888;max-width:68px;line-height:1.2}
+.ps.on .pl{color:var(--teal)}
+.pline{flex:1;height:3px;background:#ddd;margin-bottom:23px;max-width:14px}
+
+/* STEP CONTENT */
+.sc{padding:0 13px;display:none}
+.sc.on{display:block;animation:fadeIn .4s ease}
+
+/* DAY BANNER */
+.day-banner{border-radius:17px;padding:17px 19px;margin:13px 0;display:flex;align-items:center;gap:13px}
+.db-icon{font-size:2.9rem}
+.db-text h2{font-family:'Fredoka One',cursive;font-size:clamp(1.15rem,4vw,1.75rem);line-height:1.1}
+.db-text p{font-weight:700;font-size:.87rem;margin-top:3px;opacity:.85}
+
+/* CARD */
+.card{background:var(--card);border-radius:17px;padding:17px;margin-bottom:13px;box-shadow:0 3px 11px rgba(0,0,0,.08)}
+.ctitle{font-family:'Fredoka One',cursive;font-size:1.15rem;margin-bottom:11px;display:flex;align-items:center;gap:8px}
+
+/* LOW FIBER TABLE */
+.lf-table{width:100%;border-collapse:collapse;margin-top:4px;font-size:.78rem}
+.lf-table th{font-family:'Fredoka One',cursive;font-size:.82rem;padding:8px 10px;text-align:left;border-bottom:2px solid #e0e0e0}
+.lf-table th.yes-col{background:#E8F5E9;color:#2E7D32;border-radius:6px 0 0 0}
+.lf-table th.no-col{background:#FFEBEE;color:#C62828;border-radius:0 6px 0 0}
+.lf-table th.cat-col{background:#F5F5F5;color:#555}
+.lf-table tr:nth-child(even) td{background:#FAFAFA}
+.lf-table td{padding:8px 10px;border-bottom:1px solid #eeeeee;vertical-align:top;font-weight:700;line-height:1.45;color:#333}
+.lf-table td.yes-cell{background:#F1F8F1;border-left:3px solid #A5D6A7}
+.lf-table td.no-cell{background:#FFF5F5;border-left:3px solid #EF9A9A}
+.lf-table td.cat-cell{font-family:'Fredoka One',cursive;font-size:.82rem;color:#555;background:#FAFAFA}
+.yes-tag{display:inline-block;background:var(--green);color:white;font-family:'Fredoka One',cursive;font-size:.72rem;padding:2px 8px;border-radius:50px;margin-bottom:4px}
+.no-tag{display:inline-block;background:var(--red);color:white;font-family:'Fredoka One',cursive;font-size:.72rem;padding:2px 8px;border-radius:50px;margin-bottom:4px}
+
+/* LIQUID GRID */
+.lq-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px}
+.lq{border-radius:13px;padding:9px 5px;text-align:center;font-weight:800;font-size:.74rem;line-height:1.3;position:relative}
+.lq .em{font-size:1.75rem;display:block;margin-bottom:3px}
+.lq.yes{background:#E3F2FD;color:#1565C0;border:2px solid #90CAF9}
+.lq.no{background:#FFEBEE;color:#B71C1C;border:2px solid #EF9A9A}
+.lq.no::after{content:'🚫';position:absolute;top:-7px;right:-7px;font-size:.95rem;background:white;border-radius:50%;width:19px;height:19px;display:flex;align-items:center;justify-content:center}
+
+/* BADGE */
+.badge{display:inline-flex;align-items:center;gap:5px;color:white;font-family:'Fredoka One',cursive;font-size:.87rem;padding:4px 12px;border-radius:50px;margin-bottom:7px;margin-right:5px}
+.badge.ora{background:var(--orange)}.badge.red{background:var(--red)}
+.badge.purp{background:var(--purple)}.badge.blu{background:var(--blue)}
+
+/* PREP STEPS */
+.pstep{display:flex;align-items:flex-start;gap:11px;padding:12px;border-radius:14px;margin-bottom:9px}
+.snum{min-width:37px;height:37px;border-radius:50%;font-family:'Fredoka One',cursive;font-size:1.1rem;display:flex;align-items:center;justify-content:center;color:white;flex-shrink:0}
+.sbody{flex:1}
+.sbody strong{font-size:.92rem;display:block;margin-bottom:2px;font-weight:900}
+.sbody p{font-size:.83rem;color:#555;font-weight:700;line-height:1.4}
+.sico{font-size:1.75rem}
+
+/* ALERT BOXES */
+.abox{border-radius:14px;padding:13px 15px;margin-bottom:13px;display:flex;gap:11px;align-items:flex-start}
+.abox.warn{background:#FFF8E1;border-left:5px solid var(--yellow)}
+.abox.danger{background:#FFEBEE;border-left:5px solid var(--red)}
+.abox.succ{background:#E8F5E9;border-left:5px solid var(--green)}
+.abox.info{background:#E3F2FD;border-left:5px solid var(--blue)}
+.ai{font-size:1.8rem;flex-shrink:0}
+.at strong{display:block;font-size:.92rem;font-weight:900;margin-bottom:3px}
+.at p{font-size:.83rem;font-weight:700;color:#444;line-height:1.4}
+
+/* BOTTLE / PILL */
+.bottle{display:flex;align-items:center;gap:15px;background:linear-gradient(135deg,#E3F2FD,#BBDEFB);border-radius:17px;padding:15px;margin-bottom:11px;border:2px solid #90CAF9}
+.bico{font-size:3rem}
+.binfo h4{font-family:'Fredoka One',cursive;font-size:1.05rem;color:#1565C0}
+.binfo p{font-size:.83rem;font-weight:700;color:#1976D2;margin-top:3px;line-height:1.4}
+.pill{display:flex;align-items:center;gap:15px;background:linear-gradient(135deg,#F3E5F5,#E1BEE7);border-radius:17px;padding:15px;margin-bottom:11px;border:2px solid #CE93D8}
+.pico{font-size:2.75rem}
+.pinf h4{font-family:'Fredoka One',cursive;font-size:1.05rem;color:#6A1B9A}
+.pinf p{font-size:.83rem;font-weight:700;color:#7B1FA2;margin-top:3px;line-height:1.4}
+.suprep-bottle{display:flex;align-items:center;gap:15px;background:linear-gradient(135deg,#FFEBEE,#FFCDD2);border-radius:17px;padding:15px;margin-bottom:11px;border:2px solid #EF9A9A}
+.suprep-bottle h4{font-family:'Fredoka One',cursive;font-size:1.05rem;color:#B71C1C}
+.suprep-bottle p{font-size:.83rem;font-weight:700;color:#C62828;margin-top:3px;line-height:1.4}
+
+/* BIG EMPHASIS */
+.bige{text-align:center;padding:21px 15px;border-radius:21px;margin-bottom:12px}
+.bige .bi{font-size:4.2rem;display:block;margin-bottom:8px}
+.bige h3{font-family:'Fredoka One',cursive;font-size:clamp(1.1rem,4vw,1.55rem);margin-bottom:6px}
+.bige p{font-size:.9rem;font-weight:700;line-height:1.5}
+
+/* CHECKLIST */
+.cklist{list-style:none}
+.cklist li{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid #f0f0f0;font-weight:700;font-size:.88rem}
+.cklist li:last-child{border-bottom:none}
+.cklist li span:first-child{font-size:1.25rem;flex-shrink:0}
+
+/* STOOL CHART */
+.stool-card{background:var(--card);border-radius:17px;padding:16px;margin-bottom:13px;box-shadow:0 3px 11px rgba(0,0,0,.08);border:2px solid #B2EBF2}
+.stool-hdr{display:flex;align-items:flex-start;gap:11px;margin-bottom:14px}
+.stool-ico{font-size:2.1rem;flex-shrink:0}
+.stool-hdr h3{font-family:'Fredoka One',cursive;font-size:1.08rem;color:#006064;line-height:1.2;margin-bottom:3px}
+.stool-hdr p{font-size:.78rem;font-weight:700;color:#555;line-height:1.4}
+.stool-stages{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:11px}
+.ss{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 3px;border-radius:12px;text-align:center}
+.ss.bad{background:#FBE9E7}.ss.warn{background:#FFF8E1}.ss.ok{background:#FFFDE7}
+.ss.great{background:#E0F7FA;border:2px solid #4FC3F7}
+.sv{position:relative}
+.tglow svg{filter:drop-shadow(0 0 6px rgba(79,195,247,.7))}
+.tstar{position:absolute;top:-7px;right:-7px;font-size:.9rem;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
+.slbl{font-family:'Fredoka One',cursive;font-size:.62rem;line-height:1.2}
+.slbl.b{color:#BF360C}.slbl.w{color:#E65100}.slbl.o{color:#F57F17}.slbl.g{color:#006064}
+.sdesc{font-size:.6rem;font-weight:800;color:#555;line-height:1.3}
+.sdesc strong{color:#00838F}
+.stool-note{display:flex;align-items:flex-start;gap:9px;background:#FFF3E0;border-radius:11px;padding:10px;border-left:4px solid var(--orange);font-size:.79rem;font-weight:700;color:#444;line-height:1.4}
+.stool-note span{font-size:.95rem;flex-shrink:0}
+
+/* MED PAGE */
+#pgMed{min-height:100vh;background:var(--bg);padding-bottom:60px}
+.med-pg-hdr{background:linear-gradient(135deg,#37474F,#263238);padding:22px 18px 28px;text-align:center;position:relative}
+.med-pg-hdr .tlh-back{background:rgba(255,255,255,.15)}
+.med-section-title{font-family:'Fredoka One',cursive;font-size:1.25rem;color:#263238;margin:18px 13px 10px;display:flex;align-items:center;gap:8px}
+.med-block{background:var(--card);border-radius:17px;margin:0 13px 13px;padding:17px;box-shadow:0 3px 11px rgba(0,0,0,.08)}
+.med-block h4{font-family:'Fredoka One',cursive;font-size:1rem;margin-bottom:10px;color:#263238}
+.med-item{padding:9px 0;border-bottom:1px solid #f0f0f0;font-size:.84rem;font-weight:700;color:#444;line-height:1.5}
+.med-item:last-child{border-bottom:none}
+.med-item strong{color:#1A1A1A;display:block;font-size:.9rem;margin-bottom:2px}
+.med-disc{background:#FFF8E1;border-radius:12px;padding:14px;margin:0 13px 13px;font-size:.82rem;font-weight:700;color:#555;line-height:1.5;border-left:4px solid var(--yellow)}
+
+/* MED COLLAPSIBLE */
+.medsec{background:var(--card);border-radius:17px;margin-bottom:13px;box-shadow:0 3px 11px rgba(0,0,0,.08);overflow:hidden}
+.medtog{width:100%;display:flex;align-items:center;justify-content:space-between;padding:15px 17px;border:none;background:none;cursor:pointer;font-family:'Fredoka One',cursive;font-size:.95rem;color:#555}
+.medtog:hover{background:#f5f5f5}
+.medtog .arr{transition:transform .3s;font-size:.82rem}
+.medtog.open .arr{transform:rotate(180deg)}
+.medbody{padding:0 17px 15px;display:none}
+.medbody.open{display:block}
+.mitem{padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:.83rem;font-weight:700;color:#444;line-height:1.5}
+.mitem:last-child{border-bottom:none}
+.mitem strong{color:#2C2C2C;display:block;font-size:.88rem;margin-bottom:2px}
+.mdisc{background:#FFF8E1;border-radius:8px;padding:9px;margin-top:5px;font-size:.8rem;font-weight:700;color:#555;line-height:1.4}
+
+/* NAV */
+.navrow{display:flex;gap:11px;padding:13px;justify-content:space-between;position:sticky;bottom:0;background:rgba(245,240,232,.97);backdrop-filter:blur(8px);border-top:1px solid #e0e0e0}
+.nbtn{flex:1;padding:13px;border:none;border-radius:14px;font-family:'Fredoka One',cursive;font-size:1rem;cursor:pointer;transition:transform .2s,box-shadow .2s;display:flex;align-items:center;justify-content:center;gap:7px}
+.nbtn:hover{transform:translateY(-2px);box-shadow:0 6px 15px rgba(0,0,0,.14)}
+.nbtn.prev{background:#ECEFF1;color:#546E7A}
+.nbtn.next{background:var(--teal);color:white}
+.nbtn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+
+@media(max-width:360px){.stool-stages{grid-template-columns:repeat(2,1fr)}.lf-table{font-size:.7rem}}
+</style>
+</head>
+<body>
+
+<!-- ═══ HOME ═══ -->
+<!-- ═══ HOME + MENU (combined) ═══ -->
+<div class="pg on" id="pgHome">
+ <div class="home-inner">
+  <div class="home-icon">🏥</div>
+  <h1 class="home-title">Colonoscopy<br>Prep Guide</h1>
+  <p class="home-sub">Guía de Preparación para Colonoscopía</p>
+  <p class="home-org">WMC Gastroenterology</p>
+
+  <!-- Language toggle -->
+  <div class="lang-toggle">
+    <button class="lang-tog-btn active" id="togEN" onclick="switchLangToggle('en')">🇺🇸 English</button>
+    <button class="lang-tog-btn" id="togES" onclick="switchLangToggle('es')">🇲🇽 Español</button>
+  </div>
+
+  <div class="menu-divider" style="width:100%;max-width:390px;margin:20px 0 16px"></div>
+
+  <h2 class="menu-title" id="menuTitle">Choose Your Prep</h2>
+  <p class="menu-sub" id="menuSub">Select the prep your doctor prescribed</p>
+
+  <button class="prep-btn m1" onclick="openPrep('m1')">
+    <span class="pb-icon">💊</span>
+    <span class="pb-text"><span class="pb-title" id="m1btn">MiraLAX — 1x Day Prep</span><span class="pb-sub" id="m1btnsub">Single evening dose</span></span>
+    <span class="pb-arrow">→</span>
+  </button>
+  <button class="prep-btn m2" onclick="openPrep('m2')">
+    <span class="pb-icon">💊💊</span>
+    <span class="pb-text"><span class="pb-title" id="m2btn">MiraLAX — 2x Day Prep</span><span class="pb-sub" id="m2btnsub">Split dose: evening + morning</span></span>
+    <span class="pb-arrow">→</span>
+  </button>
+  <button class="prep-btn gl" onclick="openPrep('gl')">
+    <span class="pb-icon">🫙</span>
+    <span class="pb-text"><span class="pb-title" id="glbtn">GoLytely Prep</span><span class="pb-sub" id="glbtnsub">Split dose: evening + morning</span></span>
+    <span class="pb-arrow">→</span>
+  </button>
+  <button class="prep-btn sp" onclick="openPrep('sp')">
+    <span class="pb-icon">🧴</span>
+    <span class="pb-text"><span class="pb-title" id="spbtn">SUPREP Prep</span><span class="pb-sub" id="spbtnsub">Split dose: evening + morning</span></span>
+    <span class="pb-arrow">→</span>
+  </button>
+
+  <div class="menu-divider" style="width:100%;max-width:390px;margin:6px 0 14px"></div>
+
+  <button class="prep-btn med" onclick="show('pgMed')">
+    <span class="pb-icon">📋</span>
+    <span class="pb-text"><span class="pb-title" id="medbtn">General Medication Directions</span><span class="pb-sub" id="medbtnsub">Diabetes, insulin, blood thinners &amp; more</span></span>
+    <span class="pb-arrow">→</span>
+  </button>
+ </div>
+</div>
+
+<!-- ═══ MEDICATION DIRECTIONS PAGE ═══ -->
+<div class="pg" id="pgMed">
+  <div class="med-pg-hdr tlh">
+    <button class="tlh-back" onclick="goHome()">←</button>
+    <div class="tlh-title">General Medication Directions</div>
+    <div class="tlh-sub">WMC Gastroenterology Pre-Operative Instructions</div>
+  </div>
+
+  <div style="padding:0 13px">
+    <div class="abox warn" style="margin-top:16px">
+      <div class="ai">⚠️</div>
+      <div class="at">
+        <strong>Please disregard if not taking any medications listed below</strong>
+        <p>PLEASE CONSULT YOUR PRESCRIBING PHYSICIAN ABOUT TAKING ALL PRESCRIBED MEDICATIONS. Below are general directions. You must consult your physician to confirm how these medications should be adjusted prior to procedure.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="med-section-title">💊 Diabetes / Weight Loss Medications</div>
+  <div class="med-block">
+    <h4>Diabetes Pills</h4>
+    <div class="med-item"><strong>Stop 4 days prior to procedure:</strong>canagliflozin (Invokana), dapagliflozin (Farxiga), empagliflozin (Jardiance), ertugliflozin (Stelgato)</div>
+    <div class="med-item"><strong>Day before procedure:</strong>Take the AM dose but hold PM dose (night before procedure).</div>
+    <div class="med-item"><strong>Day of procedure:</strong>Hold AM dose of diabetes medication.</div>
+  </div>
+
+  <div class="med-block">
+    <h4>Insulin</h4>
+    <div class="med-item"><strong>Day before procedure:</strong>Take half the usual dose at night.</div>
+    <div class="med-item"><strong>Day of procedure:</strong>Hold AM dose of insulin.</div>
+  </div>
+
+  <div class="med-block">
+    <h4>GLP-1 / Weight Loss Medications</h4>
+    <div class="med-item"><strong>Daily RYBELSUS:</strong>HOLD on the DAY OF PROCEDURE.</div>
+    <div class="med-item"><strong>Weekly GLP-1 injections — VICTOZA, OZEMPIC, WEGOVY, MOUNJARO, TRULICITY:</strong>HOLD the injection the WEEK prior to procedure.</div>
+  </div>
+
+  <div class="med-section-title">🩸 Blood Thinners / Anticoagulants / Antiplatelets</div>
+  <div class="med-block">
+    <div class="med-item"><strong>If on any blood thinners or anticoagulants (coumadin, warfarin, Plavix, Eliquis, Pradaxa, etc.):</strong>PLEASE CONTACT YOUR PHYSICIAN TO CONFIRM WHETHER AND WHEN TO STOP YOUR MEDICATIONS.</div>
+  </div>
+
+  <div class="med-section-title">💊 Aspirin</div>
+  <div class="med-block">
+    <div class="med-item"><strong>If your Doctor prescribed Aspirin:</strong>Do NOT stop the Aspirin.</div>
+  </div>
+
+  <div class="med-disc">
+    PLEASE CONSULT YOUR PRESCRIBING PHYSICIAN ABOUT TAKING ALL PRESCRIBED MEDICATIONS. The above are general directions only. You must consult your physician to confirm how these medications should be adjusted prior to procedure.
+  </div>
+
+  <div style="padding:0 13px 16px">
+    <button class="nbtn next" style="width:100%;justify-content:center" onclick="goHome()"><span id="medBack">← Back to Menu</span></button>
+  </div>
+</div>
+
+<!-- ═══════════ SHARED LOW FIBER TABLE HTML (reused in all 4 preps) ═══════════ -->
+<!-- NOTE: This is rendered via JS into each prep's step 0 -->
+
+<!-- ═══ MIRALAX 1x ═══ -->
+<div class="pg tlw" id="pgM1">
+  <div class="tlh">
+    <button class="tlh-back" onclick="goHome()">←</button>
+    <div class="tlh-title">MiraLAX — 1x Day Prep</div>
+    <div class="tlh-sub">WMC Gastroenterology Pre-Operative Instructions</div>
+  </div>
+  <div class="prog-bar" id="m1pb">
+    <div class="ps on" onclick="goStep('m1',0)"><div class="pd">🥦</div><div class="pl">5 Days<br>Before</div></div>
+    <div class="pline"></div>
+    <div class="ps" onclick="goStep('m1',1)"><div class="pd">📅</div><div class="pl">Day<br>Before</div></div>
+    <div class="pline"></div>
+    <div class="ps" onclick="goStep('m1',2)"><div class="pd">🌅</div><div class="pl">Day<br>Of</div></div>
+  </div>
+
+  <div class="sc on" id="m1-0"></div>
+
+  <div class="sc" id="m1-1">
+    <div class="day-banner" style="background:linear-gradient(135deg,#E3F2FD,#BBDEFB);border:2px solid #90CAF9">
+      <div class="db-icon">💧</div>
+      <div class="db-text" style="color:#1565C0"><h2>Day Before — Clear Liquids + Prep</h2><p>Low fiber breakfast, then clear liquid diet after 11 AM. NO SOLID FOOD.</p></div>
+    </div>
+    <div class="abox info"><div class="ai">🌅</div><div class="at"><strong>Low Fiber Breakfast Only</strong><p>You may have a low fiber breakfast this morning. After <strong>11 AM — NO SOLID FOOD.</strong> Clear liquids only for the rest of the day. Please stay well hydrated throughout your prep.</p></div></div>
+    <div class="card">
+      <div class="ctitle" style="color:var(--blue)">💧 CLEAR LIQUID DIET — Day Before Colonoscopy Prep</div>
+      <p style="font-size:.83rem;font-weight:700;color:#555;margin-bottom:12px;line-height:1.5">The day before your colonoscopy, you may ONLY have the following clear liquids:</p>
+      <div class="lq-grid">
+        <div class="lq yes"><span class="em">🧊</span>Popsicles</div>
+        <div class="lq yes"><span class="em">🍭</span>Gelatin / Jell-O®</div>
+        <div class="lq yes"><span class="em">🍵</span>Clear Broths, bouillon, or consommé (vegetable, chicken, or beef)</div>
+        <div class="lq yes"><span class="em">☕</span>Black Coffee (without milk or creamer)</div>
+        <div class="lq yes"><span class="em">🫖</span>Black or green tea (without milk or creamer)</div>
+        <div class="lq yes"><span class="em">🥤</span>Soda &amp; Seltzer: 7-up, ginger ale, seltzer, tonic water</div>
+        <div class="lq yes"><span class="em">🍋</span>Clear fruit juices: apple juice, white grape juice, white cranberry, lemonade</div>
+        <div class="lq yes"><span class="em">🍧</span>Sorbets: Italian ice, Flavored ices</div>
+        <div class="lq yes"><span class="em">🫧</span>Coconut water</div>
+        <div class="lq yes"><span class="em">💧</span>Pedialyte</div>
+        <div class="lq yes"><span class="em">🥤</span>Ensure Clear</div>
+        <div class="lq yes"><span class="em">⚡</span>Sports Drinks: Gatorade, Powerade and other sports drinks with electrolytes</div>
+      </div>
+      <div style="margin-top:13px">
+        <div class="badge red">🚫 NO RED, ORANGE AND PURPLE LIQUIDS</div>
+        <div class="lq-grid" style="margin-top:8px">
+          <div class="lq no"><span class="em">🔴</span>Red Drinks</div>
+          <div class="lq no"><span class="em">🟠</span>Orange Drinks</div>
+          <div class="lq no"><span class="em">🍇</span>Purple Drinks</div>
+          <div class="lq no"><span class="em">🥛</span>Milk / Cream</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ctitle" style="color:var(--orange)">⏰ Bowel Prep Instructions</div>
+      <p style="font-size:.83rem;font-weight:700;color:#555;margin-bottom:12px">Please stay well hydrated throughout your prep.</p>
+      <div class="badge ora">⏰ 1:00 PM — Dulcolax</div>
+      <div class="pill" style="margin-top:8px"><div class="pico">💊</div><div class="pinf"><h4>Dulcolax (Bisacodyl) — 2 Tablets</h4><p>At 1PM take 2 Dulcolax (Bisacodyl) tablets by mouth.</p></div></div>
+      <div class="badge ora" style="margin-top:6px">⏰ 6:00 PM — MiraLAX</div>
+      <div class="bottle" style="margin-top:8px"><div class="bico">🫙</div><div class="binfo"><h4>MiraLAX 238g in 64 oz of liquid</h4><p>Mix the entire 238g bottle of MiraLAX in 64 oz of Gatorade/Pedialyte or any non-red/orange/purple clear liquid. Drink one 8 oz glass of solution every 15 minutes until completed.</p></div></div>
+      <div class="pstep" style="background:#E8F5E9;margin-top:4px"><div class="snum" style="background:var(--green)">1</div><div class="sbody"><strong>Mix MiraLAX into 64 oz of clear liquid</strong><p>Pour the entire 238g bottle of MiraLAX into 64 oz of Gatorade, Pedialyte, or any non-red/orange/purple clear liquid. Stir until fully dissolved. Keep cold.</p></div><div class="sico">🫙</div></div>
+      <div class="pstep" style="background:#E3F2FD"><div class="snum" style="background:var(--blue)">2</div><div class="sbody"><strong>Drink one 8 oz glass every 15 minutes</strong><p>Starting at 6 PM, drink one 8 oz glass (240 mL) every 15 minutes. Set a timer and keep going until all 64 oz are finished.</p></div><div class="sico">⏱️</div></div>
+      <div class="pstep" style="background:#FFF8E1"><div class="snum" style="background:var(--orange)">3</div><div class="sbody"><strong>Stay close to the bathroom</strong><p>You will need to use the bathroom many times. This is completely normal. Stay home and close to the toilet.</p></div><div class="sico">🚽</div></div>
+    </div>
+    <div class="abox warn"><div class="ai">💡</div><div class="at"><strong>Tips to Help</strong><p>Keep the mixture cold — it tastes better chilled. Drink through a straw. Suck on hard candy between glasses. Stay well hydrated throughout your prep.</p></div></div>
+    <div class="stool-card">
+      <div class="stool-hdr"><div class="stool-ico">🎯</div><div><h3>Your Goal: What Should Come Out</h3><p>Your prep is working when output looks like the last two — clear or pale yellow liquid</p></div></div>
+      <div class="stool-stages">
+        <div class="ss bad"><div class="sv"><svg viewBox="0 0 80 60" width="64" height="48"><ellipse cx="40" cy="35" rx="30" ry="18" fill="#8B4513" opacity=".9"/><text x="40" y="55" text-anchor="middle" font-size="8" fill="#666">solid</text></svg></div><div class="slbl b">❌ Solid / Dark</div><div class="sdesc">Keep drinking.</div></div>
+        <div class="ss warn"><div class="sv"><svg viewBox="0 0 80 60" width="64" height="48"><ellipse cx="40" cy="38" rx="32" ry="14" fill="#C8893A" opacity=".75"/><text x="40" y="55" text-anchor="middle" font-size="8" fill="#666">mushy</text></svg></div><div class="slbl w">⚠️ Brown / Soft</div><div class="sdesc">Getting better.</div></div>
+        <div class="ss ok"><div class="sv"><svg viewBox="0 0 80 60" width="64" height="48"><ellipse cx="40" cy="38" rx="32" ry="12" fill="#F5D78E" opacity=".6"/><text x="40" y="55" text-anchor="middle" font-size="8" fill="#666">cloudy</text></svg></div><div class="slbl o">🟡 Cloudy Yellow</div><div class="sdesc">Almost there!</div></div>
+        <div class="ss great"><div class="sv tglow"><svg viewBox="0 0 80 60" width="64" height="48"><ellipse cx="40" cy="40" rx="30" ry="10" fill="#B3E5FC" opacity=".5"/><path d="M20,35 Q30,30 40,33 Q50,36 60,33" stroke="#4FC3F7" stroke-width="1.5" fill="none" opacity=".7"/><text x="40" y="55" text-anchor="middle" font-size="8" fill="#666">clear</text></svg><div class="tstar">⭐</div></div><div class="slbl g">✅ Clear / Pale</div><div class="sdesc"><strong>GOAL!</strong></div></div>
+      </div>
+      <div class="stool-note"><span>⚠️</span><p>If your output is still dark or solid after finishing all the prep, call your doctor's office right away.</p></div>
+    </div>
+  </div>
+
+  <div class="sc" id="m1-2">
+    <div class="day-banner" style="background:linear-gradient(135deg,#FFF3E0,#FFE0B2);border:2px solid #FFCC80"><div class="db-icon">🌅</div><div class="db-text" style="color:#E65100"><h2>Day of Your Procedure</h2><p>Nothing by mouth. Arrive on time.</p></div></div>
+    <div class="bige" style="background:linear-gradient(135deg,#FFEBEE,#FFCDD2);border:3px solid var(--red)"><span class="bi">🚫🍽️</span><h3 style="color:#B71C1C">NOTHING By Mouth After Midnight</h3><p style="color:#C62828">Nothing solid by mouth after midnight prior to procedure EXCEPT the colonoscopy prep and water.<br><br><strong>NOTHING BY MOUTH 2 hours prior to procedure time.</strong></p></div>
+    <div class="card"><div class="ctitle" style="color:var(--teal)">📋 Day-Of Checklist</div>
+      <ul class="cklist">
+        <li><span>🚫</span><span>Nothing solid by mouth after midnight (prep and water only)</span></li>
+        <li><span>⛔</span><span>NOTHING BY MOUTH 2 hours prior to procedure time</span></li>
+        <li><span>💊</span><span>Take all AM medications, 2–4 hours prior to procedure with small sips of water</span></li>
+        <li><span>🚗</span><span>Arrange a driver — you cannot drive after sedation</span></li>
+        <li><span>⏰</span><span>Arrive at your scheduled appointment time</span></li>
+      </ul>
+    </div>
+    <div class="medsec"><button class="medtog" onclick="togMed(this)">💊 Medication Directions (tap to expand) <span class="arr">▼</span></button><div class="medbody"><div class="mitem"><strong>Aspirin</strong>If your Doctor prescribed Aspirin, do NOT stop the Aspirin.</div><div class="mitem"><strong>Diabetes Pills — Stop 4 days prior:</strong>canagliflozin (Invokana), dapagliflozin (Farxiga), empagliflozin (Jardiance), ertugliflozin (Stelgato). Day before: take AM dose, hold PM dose. Day of: hold AM dose.</div><div class="mitem"><strong>Insulin</strong>Day before: take half the usual dose at night. Day of: hold AM dose.</div><div class="mitem"><strong>Weekly GLP-1 (Victoza, Ozempic, Wegovy, Mounjaro, Trulicity)</strong>HOLD the injection the WEEK prior to procedure.</div><div class="mitem"><strong>Daily Rybelsus</strong>HOLD on the DAY OF PROCEDURE.</div><div class="mitem"><strong>Blood Thinners (coumadin, warfarin, Plavix, Eliquis, Pradaxa, etc.)</strong>PLEASE CONTACT YOUR PHYSICIAN TO CONFIRM WHETHER AND WHEN TO STOP YOUR MEDICATIONS.</div><div class="mdisc">PLEASE CONSULT YOUR PRESCRIBING PHYSICIAN ABOUT TAKING ALL PRESCRIBED MEDICATIONS. The above are general directions only.</div></div></div>
+    <div class="abox succ"><div class="ai">🎉</div><div class="at"><strong>You Did It!</strong><p>Completing your prep is an important step in taking care of your health. Your doctor will be able to see clearly. You can do this!</p></div></div>
+  </div>
+  <div class="navrow"><button class="nbtn prev" id="m1prev" onclick="stepNav('m1',-1)" disabled>← <span id="m1prevlbl">Back</span></button><button class="nbtn next" id="m1next" onclick="stepNav('m1',1)"><span id="m1nextlbl">Next</span> →</button></div>
+</div>
+
+<!-- ═══ MIRALAX 2x ═══ -->
+<div class="pg tlw" id="pgM2">
+  <div class="tlh">
+    <button class="tlh-back" onclick="goHome()">←</button>
+    <div class="tlh-title">MiraLAX — 2x Day Prep</div>
+    <div class="tlh-sub">WMC Gastroenterology Pre-Operative Instructions</div>
+  </div>
+  <div class="prog-bar" id="m2pb">
+    <div class="ps on" onclick="goStep('m2',0)"><div class="pd">🥦</div><div class="pl">5 Days<br>Before</div></div>
+    <div class="pline"></div>
+    <div class="ps" onclick="goStep('m2',1)"><div class="pd">📅</div><div class="pl">Day<br>Before</div></div>
+    <div class="pline"></div>
+    <div class="ps" onclick="goStep('m2',2)"><div class="pd">🌙</div><div class="pl">Morning<br>Of</div></div>
+    <div class="pline"></div>
+    <div class="ps" onclick="goStep('m2',3)"><div class="pd">🌅</div><div class="pl">Day<br>Of</div></div>
+  </div>
+
+  <div class="sc on" id="m2-0"></div>
+
+  <div class="sc" id="m2-1">
+    <div class="day-banner" style="background:linear-gradient(135deg,#E3F2FD,#BBDEFB);border:2px solid #90CAF9"><div class="db-icon">💧</div><div class="db-text" style="color:#1565C0"><h2>Day Before — Clear Liquids + Evening Prep</h2><p>Low fiber breakfast, then clear liquid diet after 11 AM. NO SOLID FOOD.</p></div></div>
+    <div class="abox info"><div class="ai">🌅</div><div class="at"><strong>Low Fiber Breakfast Only</strong><p>You may have a low fiber breakfast. After <strong>11 AM — NO SOLID FOOD.</strong> Clear liquids only. Please stay well hydrated throughout your prep.</p></div></div>
+    <div class="card">
+      <div class="ctitle" style="color:var(--blue)">💧 CLEAR LIQUID DIET — Day Before Colonoscopy Prep</div>
+      <p style="font-size:.83rem;font-weight:700;color:#555;margin-bottom:12px;line-height:1.5">The day before your colonoscopy, you may ONLY have the following clear liquids:</p>
+      <div class="lq-grid">
+        <div class="lq yes"><span class="em">🧊</span>Popsicles</div>
+        <div class="lq yes"><span class="em">🍭</span>Gelatin / Jell-O®</div>
+        <div class="lq yes"><span class="em">🍵</span>Clear Broths, bouillon, or consommé (vegetable, chicken, or beef)</div>
+        <div class="lq yes"><span class="em">☕</span>Black Coffee (without milk or creamer)</div>
+        <div class="lq yes"><span class="em">🫖</span>Black or green tea (without milk or creamer)</div>
+        <div class="lq yes"><span class="em">🥤</span>Soda &amp; Seltzer: 7-up, ginger ale, seltzer, tonic water</div>
+        <div class="lq yes"><span class="em">🍋</span>Clear fruit juices: apple juice, white grape juice, white cranberry, lemonade</div>
+        <div class="lq yes"><span class="em">🍧</span>Sorbets: Italian ice, Flavored ices</div>
+        <div class="lq yes"><span class="em">🫧</span>Coconut water</div>
+        <div class="lq yes"><span class="em">💧</span>Pedialyte</div>
+        <div class="lq yes"><span class="em">🥤</span>Ensure Clear</div>
+        <div class="lq yes"><span class="em">⚡</span>Sports Drinks: Gatorade, Powerade and other sports drinks with electrolytes</div>
+      </div>
+      <div style="margin-top:13px">
+        <div class="badge red">🚫 NO RED, ORANGE AND PURPLE LIQUIDS</div>
+        <div class="lq-grid" style="margin-top:8px">
+          <div class="lq no"><span class="em">🔴</span>Red Drinks</div>
+          <div class="lq no"><span class="em">🟠</span>Orange Drinks</div>
+          <div class="lq no"><span class="em">🍇</span>Purple Drinks</div>
+          <div class="lq no"><span class="em">🥛</span>Milk / Cream</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ctitle" style="color:var(--orange)">⏰ Bowel Prep Instructions</div>
+      <p style="font-size:.83rem;font-weight:700;color:#555;margin-bottom:12px">Please stay well hydrated throughout your prep.</p>
+      <div class="badge ora">⏰ 1:00 PM — Dulcolax</div>
+      <div class="pill" style="margin-top:8px"><div class="pico">💊</div><div class="pinf"><h4>Dulcolax (Bisacodyl) — 2 Tablets</h4><p>At 1PM take 2 Dulcolax (Bisacodyl) tablets by mouth.</p></div></div>
+      <div class="badge ora" style="margin-top:6px">⏰ 6:00 PM — First MiraLAX Dose</div>
+      <div class="bottle" style="margin-top:8px"><div class="bico">🫙</div><div class="binfo"><h4>Mix 117gm MiraLAX in 32 oz of liquid</h4><p>Mix 117gm of MiraLAX in 32 oz of liquid. Drink one 8 oz glass of solution every 15 minutes until completed.</p></div></div>
+      <div class="badge purp" style="margin-top:6px">⏰ 9:00 PM — Second Dulcolax</div>
+      <div class="pill" style="margin-top:8px"><div class="pico">💊</div><div class="pinf"><h4>Dulcolax (Bisacodyl) — 2 More Tablets</h4><p>At 9PM take 2 more Dulcolax (Bisacodyl) tablets by mouth.</p></div></div>
+    </div>
+    <div class="abox warn"><div class="ai">💡</div><div class="at"><strong>Tips to Help</strong><p>Keep the mixture cold — it tastes better chilled. Drink through a straw. Stay well hydrated throughout your prep.</p></div></div>
+  </div>
+    <div class="day-banner" style="background:linear-gradient(135deg,#F3E5F5,#E1BEE7);border:2px solid #CE93D8"><div class="db-icon">🌙</div><div class="db-text" style="color:#6A1B9A"><h2>Morning of Procedure — Second Dose</h2><p>Second MiraLAX dose at 5 AM</p></div></div>
+    <div class="card">
+      <div class="ctitle" style="color:var(--purple)">⏰ Morning Prep</div>
+      <div class="badge purp">⏰ 5:00 AM — Second MiraLAX Dose</div>
+      <div class="bottle" style="margin-top:8px"><div class="bico">🫙</div><div class="binfo"><h4>Mix 117gm MiraLAX in 32 oz of liquid</h4><p>Mix 117gm of MiraLAX in 32 oz of liquid. Drink one 8 oz glass of solution every 15 minutes until completed.</p></div></div>
+    </div>
+    <div class="stool-card">
+      <div class="stool-hdr"><div class="stool-ico">🎯</div><div><h3>Your Goal: What Should Come Out</h3><p>Prep is complete when output is clear or pale yellow liquid</p></div></div>
+      <div class="stool-stages">
+        <div class="ss bad"><div class="sv"><svg viewBox="0 0 80 60" width="64" height="48"><ellipse cx="40" cy="35" rx="30" ry="18" fill="#8B4513" opacity=".9"/><text x="40" y="55" text-anchor="middle" font-size="8" fill="#666">solid</text></svg></div><div class="slbl b">❌ Solid / Dark</div><div class="sdesc">Keep drinking.</div></div>
+        <div class="ss warn"><div class="sv"><svg viewBox="0 0 80 60" width="64" height="48"><ellipse cx="40" cy="38" rx="32" ry="14" fill="#C8893A" opacity=".75"/><text x="40" y="55" text-anchor="middle" font-size="8" fill="#666">mushy</text></svg></div><div class="slbl w">⚠️ Brown / Soft</div><div class="sdesc">Getting better.</div></div>
+        <div class="ss ok"><div class="sv"><svg viewBox="0 0 80 60" width="64" height="48"><ellipse cx="40" cy="38" rx="32" ry="12" fill="#F5D78E" opacity=".6"/><text x="40" y="55" text-anchor="middle" font-size="8" fill="#666">cloudy</text></svg></div><div class="slbl o">🟡 Cloudy Yellow</div><div class="sdesc">Almost there!</div></div>
+        <div class="ss great"><div class="sv tglow"><svg viewBox="0 0 80 60" width="64" height="48"><ellipse cx="40" cy="40" rx="30" ry="10" fill="#B3E5FC" opacity=".5"/><path d="M20,35 Q30,30 40,33 Q50,36 60,33" stroke="#4FC3F7" stroke-width="1.5" fill="none" opacity=".7"/><text x="40" y="55" text-anchor="middle" font-size="8" fill="#666">clear</text></svg><div class="tstar">⭐</div></div><div class="slbl g">✅ Clear / Pale</div><div class="sdesc"><strong>GOAL!</strong></div></div>
+      </div>
+      <div class="stool-note"><span>⚠️</span><p>If your output is still dark after finishing all the prep, call your doctor's office right away.</p></div>
+    </div>
+  </div>
+
+  <div class="sc" id="m2-3">
+    <div class="day-banner" style="background:linear-gradient(135deg,#FFF3E0,#FFE0B2);border:2px solid #FFCC80"><div class="db-icon">🌅</div><div class="db-text" style="color:#E65100"><h2>Day of Your Procedure</h2><p>Nothing by mouth. Arrive on time.</p></div></div>
+    <div class="bige" style="background:linear-gradient(135deg,#FFEBEE,#FFCDD2);border:3px solid var(--red)"><span class="bi">🚫🍽️</span><h3 style="color:#B71C1C">NOTHING By Mouth After Midnight</h3><p style="color:#C62828">Nothing solid by mouth after midnight prior to procedure EXCEPT the colonoscopy prep and water.<br><br><strong>NOTHING BY MOUTH 2 hours prior to procedure time.</strong></p></div>
+    <div class="card"><div class="ctitle" style="color:var(--teal)">📋 Day-Of Checklist</div><ul class="cklist"><li><span>🚫</span><span>Nothing solid by mouth after midnight (prep and water only)</span></li><li><span>⛔</span><span>NOTHING BY MOUTH 2 hours prior to procedure time</span></li><li><span>💊</span><span>Take all AM medications, 2–4 hours prior to procedure with small sips of water</span></li><li><span>🚗</span><span>Arrange a driver — you cannot drive after sedation</span></li></ul></div>
+    <div class="medsec"><button class="medtog" onclick="togMed(this)">💊 Medication Directions (tap to expand) <span class="arr">▼</span></button><div class="medbody"><div class="mitem"><strong>Aspirin</strong>If your Doctor prescribed Aspirin, do NOT stop the Aspirin.</div><div class="mitem"><strong>Diabetes Pills — Stop 4 days prior:</strong>canagliflozin (Invokana), dapagliflozin (Farxiga), empagliflozin (Jardiance), ertugliflozin (Stelgato). Day before: take AM dose, hold PM dose. Day of: hold AM dose.</div><div class="mitem"><strong>Insulin</strong>Day before: take half the usual dose at night. Day of: hold AM dose.</div><div class="mitem"><strong>Weekly GLP-1 (Victoza, Ozempic, Wegovy, Mounjaro, Trulicity)</strong>HOLD the injection the WEEK prior to procedure.</div><div class="mitem"><strong>Daily Rybelsus</strong>HOLD on the DAY OF PROCEDURE.</div><div class="mitem"><strong>Blood Thinners (coumadin, warfarin, Plavix, Eliquis, Pradaxa, etc.)</strong>PLEASE CONTACT YOUR PHYSICIAN TO CONFIRM WHETHER AND WHEN TO STOP YOUR MEDICATIONS.</div><div class="mdisc">PLEASE CONSULT YOUR PRESCRIBING PHYSICIAN ABOUT TAKING ALL PRESCRIBED MEDICATIONS. The above are general directions only.</div></div></div>
+    <div class="abox succ"><div class="ai">🎉</div><div class="at"><strong>You Did It!</strong><p>Completing your prep is an important step. Your doctor will be able to see clearly. You can do this!</p></div></div>
+  </div>
+  <div class="navrow"><button class="nbtn prev" id="m2prev" onclick="stepNav('m2',-1)" disabled>← <span id="m2prevlbl">Back</span></button><button class="nbtn next" id="m2next" onclick="stepNav('m2',1)"><span id="m2nextlbl">Next</span> →</button></div>
+</div>
+
+<!-- ═══ GOLYTELY ═══ -->
+<div class="pg tlw" id="pgGL">
+  <div class="tlh">
+    <button class="tlh-back" onclick="goHome()">←</button>
+    <div class="tlh-title">GoLytely Bowel Prep</div>
+    <div class="tlh-sub">WMC Gastroenterology Pre-Operative Instructions</div>
+  </div>
+  <div class="prog-bar" id="glpb">
+    <div class="ps on" onclick="goStep('gl',0)"><div class="pd">🥦</div><div class="pl">5 Days<br>Before</div></div>
+    <div class="pline"></div>
+    <div class="ps" onclick="goStep('gl',1)"><div class="pd">📅</div><div class="pl">Day<br>Before</div></div>
+    <div class="pline"></div>
+    <div class="ps" onclick="goStep('gl',2)"><div class="pd">🌙</div><div class="pl">Morning<br>Of</div></div>
+    <div class="pline"></div>
+    <div class="ps" onclick="goStep('gl',3)"><div class="pd">🌅</div><div class="pl">Day<br>Of</div></div>
+  </div>
+
+  <div class="sc on" id="gl-0"></div>
+
+  <div class="sc" id="gl-1">
+    <div class="day-banner" style="background:linear-gradient(135deg,#E3F2FD,#BBDEFB);border:2px solid #90CAF9"><div class="db-icon">💧</div><div class="db-text" style="color:#1565C0"><h2>Day Before — Clear Liquids + Evening Prep</h2><p>Low fiber breakfast, then clear liquid diet after 11 AM. NO SOLID FOOD.</p></div></div>
+    <div class="abox info"><div class="ai">🌅</div><div class="at"><strong>Low Fiber Breakfast Only</strong><p>You may have a low fiber breakfast. After <strong>11 AM — NO SOLID FOOD.</strong> Clear liquids only. Please stay well hydrated throughout your prep.</p></div></div>
+    <div class="card">
+      <div class="ctitle" style="color:var(--blue)">💧 CLEAR LIQUID DIET — Day Before Colonoscopy Prep</div>
+      <p style="font-size:.83rem;font-weight:700;color:#555;margin-bottom:12px;line-height:1.5">The day before your colonoscopy, you may ONLY have the following clear liquids:</p>
+      <div class="lq-grid">
+        <div class="lq yes"><span class="em">🧊</span>Popsicles</div>
+        <div class="lq yes"><span class="em">🍭</span>Gelatin / Jell-O®</div>
+        <div class="lq yes"><span class="em">🍵</span>Clear Broths, bouillon, or consommé (vegetable, chicken, or beef)</div>
+        <div class="lq yes"><span class="em">☕</span>Black Coffee (without milk or creamer)</div>
+        <div class="lq yes"><span class="em">🫖</span>Black or green tea (without milk or creamer)</div>
+        <div class="lq yes"><span class="em">🥤</span>Soda &amp; Seltzer: 7-up, ginger ale, seltzer, tonic water</div>
+        <div class="lq yes"><span class="em">🍋</span>Clear fruit juices: apple juice, white grape juice, white cranberry, lemonade</div>
+        <div class="lq yes"><span class="em">🍧</span>Sorbets: Italian ice, Flavored ices</div>
+        <div class="lq yes"><span class="em">🫧</span>Coconut water</div>
+        <div class="lq yes"><span class="em">💧</span>Pedialyte</div>
+        <div class="lq yes"><span class="em">🥤</span>Ensure Clear</div>
+        <div class="lq yes"><span class="em">⚡</span>Sports Drinks: Gatorade, Powerade and other sports drinks with electrolytes</div>
+      </div>
+      <div style="margin-top:13px">
+        <div class="badge red">🚫 NO RED, ORANGE AND PURPLE LIQUIDS</div>
+        <div class="lq-grid" style="margin-top:8px">
+          <div class="lq no"><span class="em">🔴</span>Red Drinks</div>
+          <div class="lq no"><span class="em">🟠</span>Orange Drinks</div>
+          <div class="lq no"><span class="em">🍇</span>Purple Drinks</div>
+          <div class="lq no"><span class="em">🥛</span>Milk / Cream</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ctitle" style="color:var(--orange)">⏰ Bowel Prep Instructions</div>
+      <p style="font-size:.83rem;font-weight:700;color:#555;margin-bottom:12px">Please stay well hydrated throughout your prep.</p>
+      <div class="badge ora">⏰ 1:00 PM — Dulcolax</div>
+      <div class="pill" style="margin-top:8px"><div class="pico">💊</div><div class="pinf"><h4>Dulcolax (Bisacodyl) — 2 Tablets</h4><p>At 1PM take 2 Dulcolax (Bisacodyl) tablets by mouth.</p></div></div>
+      <div class="badge ora" style="margin-top:6px">⏰ 6:00 PM — First GoLytely Dose</div>
+      <div class="bottle" style="margin-top:8px"><div class="bico">🫙</div><div class="binfo"><h4>GoLytely — 8 glasses (64 oz)</h4><p>Drink 1 glass (8 oz/240 ml) of bowel preparation every 10 minutes for a total of 8 glasses. You may continue to drink additional clear liquids.</p></div></div>
+    </div>
+    <div class="abox warn"><div class="ai">💡</div><div class="at"><strong>Tips to Help</strong><p>Keep GoLytely cold — it tastes better chilled. Mix with Gatorade or Pedialyte (no red/orange/purple). Stay well hydrated throughout your prep.</p></div></div>
+  </div>
+
+  <div class="sc" id="gl-2">
+    <div class="day-banner" style="background:linear-gradient(135deg,#F3E5F5,#E1BEE7);border:2px solid #CE93D8"><div class="db-icon">🌙</div><div class="db-text" style="color:#6A1B9A"><h2>Morning of Procedure — Second Dose</h2><p>Second GoLytely dose at 5 AM</p></div></div>
+    <div class="card">
+      <div class="ctitle" style="color:var(--purple)">⏰ Morning Prep</div>
+      <div class="badge purp">⏰ 5:00 AM — Second GoLytely Dose</div>
+      <div class="bottle" style="margin-top:8px"><div class="bico">🫙</div><div class="binfo"><h4>GoLytely — 8 More Glasses</h4><p>Drink 1 glass (8 oz/240 ml) of bowel preparation every 10 minutes for a total of 8 glasses. Fifteen minutes later, drink an additional 2 glasses of clear liquids.</p></div></div>
+    </div>
+    <div class="stool-card">
+      <div class="stool-hdr"><div class="stool-ico">🎯</div><div><h3>Your Goal: What Should Come Out</h3><p>Prep is complete when output is clear or pale yellow liquid</p></div></div>
+      <div class="stool-stages">
+        <div class="ss bad"><div class="sv"><svg viewBox="0 0 80 60" width="64" height="48"><ellipse cx="40" cy="35" rx="30" ry="18" fill="#8B4513" opacity=".9"/><text x="40" y="55" text-anchor="middle" font-size="8" fill="#666">solid</text></svg></div><div class="slbl b">❌ Solid / Dark</div><div class="sdesc">Keep drinking.</div></div>
+        <div class="ss warn"><div class="sv"><svg viewBox="0 0 80 60" width="64" height="48"><ellipse cx="40" cy="38" rx="32" ry="14" fill="#C8893A" opacity=".75"/><text x="40" y="55" text-anchor="middle" font-size="8" fill="#666">mushy</text></svg></div><div class="slbl w">⚠️ Brown / Soft</div><div class="sdesc">Getting better.</div></div>
+        <div class="ss ok"><div class="sv"><svg viewBox="0 0 80 60" width="64" height="48"><ellipse cx="40" cy="38" rx="32" ry="12" fill="#F5D78E" opacity=".6"/><text x="40" y="55" text-anchor="middle" font-size="8" fill="#666">cloudy</text></svg></div><div class="slbl o">🟡 Cloudy Yellow</div><div class="sdesc">Almost there!</div></div>
+        <div class="ss great"><div class="sv tglow"><svg viewBox="0 0 80 60" width="64" height="48"><ellipse cx="40" cy="40" rx="30" ry="10" fill="#B3E5FC" opacity=".5"/><path d="M20,35 Q30,30 40,33 Q50,36 60,33" stroke="#4FC3F7" stroke-width="1.5" fill="none" opacity=".7"/><text x="40" y="55" text-anchor="middle" font-size="8" fill="#666">clear</text></svg><div class="tstar">⭐</div></div><div class="slbl g">✅ Clear / Pale</div><div class="sdesc"><strong>GOAL!</strong></div></div>
+      </div>
+      <div class="stool-note"><span>⚠️</span><p>If your output is still dark after finishing all the prep, call your doctor's office right away.</p></div>
+    </div>
+  </div>
+
+  <div class="sc" id="gl-3">
+    <div class="day-banner" style="background:linear-gradient(135deg,#FFF3E0,#FFE0B2);border:2px solid #FFCC80"><div class="db-icon">🌅</div><div class="db-text" style="color:#E65100"><h2>Day of Your Procedure</h2><p>Nothing by mouth. Arrive on time.</p></div></div>
+    <div class="bige" style="background:linear-gradient(135deg,#FFEBEE,#FFCDD2);border:3px solid var(--red)"><span class="bi">🚫🍽️</span><h3 style="color:#B71C1C">NOTHING By Mouth After Midnight</h3><p style="color:#C62828">Nothing solid by mouth after midnight prior to procedure EXCEPT the colonoscopy prep and water.<br><br><strong>NOTHING BY MOUTH 2 hours prior to procedure time.</strong></p></div>
+    <div class="card"><div class="ctitle" style="color:var(--teal)">📋 Day-Of Checklist</div><ul class="cklist"><li><span>🚫</span><span>Nothing solid by mouth after midnight (prep and water only)</span></li><li><span>⛔</span><span>NOTHING BY MOUTH 2 hours prior to procedure time</span></li><li><span>💊</span><span>Take all AM medications, 2–4 hours prior to procedure with small sips of water</span></li><li><span>🚗</span><span>Arrange a driver — you cannot drive after sedation</span></li></ul></div>
+    <div class="medsec"><button class="medtog" onclick="togMed(this)">💊 Medication Directions (tap to expand) <span class="arr">▼</span></button><div class="medbody"><div class="mitem"><strong>Aspirin</strong>If your Doctor prescribed Aspirin, do NOT stop the Aspirin.</div><div class="mitem"><strong>Diabetes Pills — Stop 4 days prior:</strong>canagliflozin (Invokana), dapagliflozin (Farxiga), empagliflozin (Jardiance), ertugliflozin (Stelgato). Day before: take AM dose, hold PM dose. Day of: hold AM dose.</div><div class="mitem"><strong>Insulin</strong>Day before: take half the usual dose at night. Day of: hold AM dose.</div><div class="mitem"><strong>Weekly GLP-1 (Victoza, Ozempic, Wegovy, Mounjaro, Trulicity)</strong>HOLD the injection the WEEK prior to procedure.</div><div class="mitem"><strong>Daily Rybelsus</strong>HOLD on the DAY OF PROCEDURE.</div><div class="mitem"><strong>Blood Thinners (coumadin, warfarin, Plavix, Eliquis, Pradaxa, etc.)</strong>PLEASE CONTACT YOUR PHYSICIAN TO CONFIRM WHETHER AND WHEN TO STOP YOUR MEDICATIONS.</div><div class="mdisc">PLEASE CONSULT YOUR PRESCRIBING PHYSICIAN ABOUT TAKING ALL PRESCRIBED MEDICATIONS. The above are general directions only.</div></div></div>
+    <div class="abox succ"><div class="ai">🎉</div><div class="at"><strong>You Did It!</strong><p>Completing your prep is an important step. Your doctor will be able to see clearly. You can do this!</p></div></div>
+  </div>
+  <div class="navrow"><button class="nbtn prev" id="glprev" onclick="stepNav('gl',-1)" disabled>← <span id="glprevlbl">Back</span></button><button class="nbtn next" id="glnext" onclick="stepNav('gl',1)"><span id="glnextlbl">Next</span> →</button></div>
+</div>
+
+<!-- ═══ SUPREP ═══ -->
+<div class="pg tlw" id="pgSP">
+  <div class="tlh">
+    <button class="tlh-back" onclick="goHome()">←</button>
+    <div class="tlh-title">SUPREP for Colonoscopy</div>
+    <div class="tlh-sub">Ambulatory Care Pavilion — 914-533-4111</div>
+  </div>
+  <div class="prog-bar" id="sppb">
+    <div class="ps on" onclick="goStep('sp',0)"><div class="pd">🥦</div><div class="pl">5 Days<br>Before</div></div>
+    <div class="pline"></div>
+    <div class="ps" onclick="goStep('sp',1)"><div class="pd">📅</div><div class="pl">Day<br>Before</div></div>
+    <div class="pline"></div>
+    <div class="ps" onclick="goStep('sp',2)"><div class="pd">🌙</div><div class="pl">Morning<br>Of</div></div>
+    <div class="pline"></div>
+    <div class="ps" onclick="goStep('sp',3)"><div class="pd">🌅</div><div class="pl">Day<br>Of</div></div>
+  </div>
+
+  <div class="sc on" id="sp-0"></div>
+
+  <div class="sc" id="sp-1">
+    <div class="day-banner" style="background:linear-gradient(135deg,#FFEBEE,#FFCDD2);border:2px solid #EF9A9A"><div class="db-icon">🧴</div><div class="db-text" style="color:#B71C1C"><h2>Day Before — Evening SUPREP Dose</h2><p>Clear liquids all day. Start prep at 8:00 PM.</p></div></div>
+    <div class="card"><div class="abox info" style="margin-bottom:0"><div class="ai">🛒</div><div class="at"><strong>To Buy</strong><p>• SUPREP Prep<br>• Dulcolax® Laxative 5mg pack</p></div></div></div>
+    <div class="card">
+      <div class="ctitle" style="color:var(--blue)">💧 CLEAR LIQUID DIET — Day Before Colonoscopy Prep</div>
+      <p style="font-size:.83rem;font-weight:700;color:#555;margin-bottom:12px;line-height:1.5">The day before your colonoscopy, you may ONLY have the following clear liquids:</p>
+      <div class="lq-grid">
+        <div class="lq yes"><span class="em">🧊</span>Popsicles</div>
+        <div class="lq yes"><span class="em">🍭</span>Gelatin / Jell-O®</div>
+        <div class="lq yes"><span class="em">🍵</span>Clear Broths, bouillon, or consommé (vegetable, chicken, or beef)</div>
+        <div class="lq yes"><span class="em">☕</span>Black Coffee (without milk or creamer)</div>
+        <div class="lq yes"><span class="em">🫖</span>Black or green tea (without milk or creamer)</div>
+        <div class="lq yes"><span class="em">🥤</span>Soda &amp; Seltzer: 7-up, ginger ale, seltzer, tonic water</div>
+        <div class="lq yes"><span class="em">🍋</span>Clear fruit juices: apple juice, white grape juice, white cranberry, lemonade</div>
+        <div class="lq yes"><span class="em">🍧</span>Sorbets: Italian ice, Flavored ices</div>
+        <div class="lq yes"><span class="em">🫧</span>Coconut water</div>
+        <div class="lq yes"><span class="em">💧</span>Pedialyte</div>
+        <div class="lq yes"><span class="em">🥤</span>Ensure Clear</div>
+        <div class="lq yes"><span class="em">⚡</span>Sports Drinks: Gatorade, Powerade and other sports drinks with electrolytes</div>
+      </div>
+      <div style="margin-top:13px">
+        <div class="badge red">🚫 NO RED, ORANGE AND PURPLE LIQUIDS</div>
+        <div class="lq-grid" style="margin-top:8px">
+          <div class="lq no"><span class="em">🔴</span>Red Drinks</div>
+          <div class="lq no"><span class="em">🟠</span>Orange Drinks</div>
+          <div class="lq no"><span class="em">🍇</span>Purple Drinks</div>
+          <div class="lq no"><span class="em">🥛</span>Milk / Cream</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ctitle" style="color:var(--red)">⏰ Prep Instructions</div>
+      <div class="badge ora">⏰ 1:00 PM — Bisacodyl (Dulcolax®)</div>
+      <div class="pill" style="margin-top:8px"><div class="pico">💊</div><div class="pinf"><h4>Bisacodyl (Dulcolax®) — 4 Tablets</h4><p>At 1 PM: Take 4 Bisacodyl tablets (Dulcolax®) by mouth.</p></div></div>
+      <div class="badge red" style="margin-top:6px">⏰ 8:00 PM — First SUPREP Bottle</div>
+      <div class="suprep-bottle" style="margin-top:8px"><div style="font-size:3rem;flex-shrink:0">🧴</div><div><h4>SUPREP — First 6 oz Bottle</h4><p>Pour one 6 oz bottle of SUPREP into the mixing container. Add cool drinking water up to the <strong>16-ounce line</strong> on the container and mix.</p></div></div>
+      <div class="pstep" style="background:#FFEBEE"><div class="snum" style="background:var(--red)">!</div><div class="sbody"><strong>YOU MUST DRINK two more 16-ounce containers of water over the next 1 hour</strong><p>After drinking the mixed SUPREP, you MUST drink two additional 16-ounce containers of plain water over the next 1 hour. Continue to drink clear liquids until bedtime.</p></div><div class="sico">💧</div></div>
+    </div>
+    <div class="stool-card">
+      <div class="stool-hdr"><div class="stool-ico">🎯</div><div><h3>Your Goal: What Should Come Out</h3><p>Prep is complete when output is clear or pale yellow liquid</p></div></div>
+      <div class="stool-stages">
+        <div class="ss bad"><div class="sv"><svg viewBox="0 0 80 60" width="64" height="48"><ellipse cx="40" cy="35" rx="30" ry="18" fill="#8B4513" opacity=".9"/><text x="40" y="55" text-anchor="middle" font-size="8" fill="#666">solid</text></svg></div><div class="slbl b">❌ Solid / Dark</div><div class="sdesc">Keep drinking.</div></div>
+        <div class="ss warn"><div class="sv"><svg viewBox="0 0 80 60" width="64" height="48"><ellipse cx="40" cy="38" rx="32" ry="14" fill="#C8893A" opacity=".75"/><text x="40" y="55" text-anchor="middle" font-size="8" fill="#666">mushy</text></svg></div><div class="slbl w">⚠️ Brown / Soft</div><div class="sdesc">Getting better.</div></div>
+        <div class="ss ok"><div class="sv"><svg viewBox="0 0 80 60" width="64" height="48"><ellipse cx="40" cy="38" rx="32" ry="12" fill="#F5D78E" opacity=".6"/><text x="40" y="55" text-anchor="middle" font-size="8" fill="#666">cloudy</text></svg></div><div class="slbl o">🟡 Cloudy Yellow</div><div class="sdesc">Almost there!</div></div>
+        <div class="ss great"><div class="sv tglow"><svg viewBox="0 0 80 60" width="64" height="48"><ellipse cx="40" cy="40" rx="30" ry="10" fill="#B3E5FC" opacity=".5"/><path d="M20,35 Q30,30 40,33 Q50,36 60,33" stroke="#4FC3F7" stroke-width="1.5" fill="none" opacity=".7"/><text x="40" y="55" text-anchor="middle" font-size="8" fill="#666">clear</text></svg><div class="tstar">⭐</div></div><div class="slbl g">✅ Clear / Pale</div><div class="sdesc"><strong>GOAL!</strong></div></div>
+      </div>
+      <div class="stool-note"><span>⚠️</span><p>If your output is still dark after finishing all the prep, call your doctor's office right away.</p></div>
+    </div>
+  </div>
+
+  <div class="sc" id="sp-2">
+    <div class="day-banner" style="background:linear-gradient(135deg,#F3E5F5,#E1BEE7);border:2px solid #CE93D8"><div class="db-icon">🌙</div><div class="db-text" style="color:#6A1B9A"><h2>Morning of Procedure — Second SUPREP</h2><p>Second bottle at 5:00 AM</p></div></div>
+    <div class="card">
+      <div class="ctitle" style="color:var(--purple)">⏰ Morning Prep</div>
+      <div class="badge purp">⏰ 5:00 AM — Second SUPREP Bottle</div>
+      <div class="suprep-bottle" style="margin-top:8px"><div style="font-size:3rem;flex-shrink:0">🧴</div><div><h4>SUPREP — Remaining 6 oz Bottle</h4><p>Pour the remaining 6-ounce bottle of SUPREP into the mixing container. Add cool drinking water up to the <strong>16-ounce line</strong> on the container and mix.</p></div></div>
+      <div class="pstep" style="background:#FFEBEE"><div class="snum" style="background:var(--red)">!</div><div class="sbody"><strong>YOU MUST DRINK two additional 16-ounce containers of water over the next 1 hour</strong><p>After drinking the second SUPREP mixture, drink two additional 16-ounce containers of plain water over the next 1 hour.</p></div><div class="sico">💧</div></div>
+    </div>
+  </div>
+
+  <div class="sc" id="sp-3">
+    <div class="day-banner" style="background:linear-gradient(135deg,#FFF3E0,#FFE0B2);border:2px solid #FFCC80"><div class="db-icon">🌅</div><div class="db-text" style="color:#E65100"><h2>Day of Your Procedure</h2><p>Nothing by mouth. Arrive on time.</p></div></div>
+    <div class="bige" style="background:linear-gradient(135deg,#FFEBEE,#FFCDD2);border:3px solid var(--red)"><span class="bi">🚫🍽️</span><h3 style="color:#B71C1C">NOTHING By Mouth After Midnight</h3><p style="color:#C62828">Nothing solid by mouth after midnight prior to procedure EXCEPT the colonoscopy prep and water.<br><br><strong>NOTHING BY MOUTH 2 hours prior to procedure time.</strong></p></div>
+    <div class="card"><div class="ctitle" style="color:var(--teal)">📋 Day-Of Checklist</div><ul class="cklist"><li><span>🚫</span><span>Nothing solid by mouth after midnight (prep and water only)</span></li><li><span>⛔</span><span>NOTHING BY MOUTH 2 hours prior to procedure time</span></li><li><span>💊</span><span>Take all AM medications, 2–4 hours prior to procedure with small sips of water</span></li><li><span>🚗</span><span>Arrange a driver — you cannot drive after sedation</span></li></ul></div>
+    <div class="abox succ"><div class="ai">🎉</div><div class="at"><strong>You Did It!</strong><p>Completing your prep is an important step. Your doctor will be able to see clearly. You can do this!</p></div></div>
+  </div>
+  <div class="navrow"><button class="nbtn prev" id="spprev" onclick="stepNav('sp',-1)" disabled>← <span id="spprevlbl">Back</span></button><button class="nbtn next" id="spnext" onclick="stepNav('sp',1)"><span id="spnextlbl">Next</span> →</button></div>
+</div>
+
+<!-- ═══════════════════════════ JAVASCRIPT ═══════════════════════════ -->
+<script>
+const PAGES  = { m1:'pgM1', m2:'pgM2', gl:'pgGL', sp:'pgSP' };
+const TOTALS = { m1:3, m2:4, gl:4, sp:4 };
+const CUR    = { m1:0, m2:0, gl:0, sp:0 };
+let lang = 'en';
+
+/* ── Low-fiber content injected into step 0 of every prep ── */
+const LF_HTML = `
+<div class="day-banner" style="background:linear-gradient(135deg,#E8F5E9,#C8E6C9);border:2px solid #A5D6A7">
+  <div class="db-icon">🥦</div>
+  <div class="db-text" style="color:#2E7D32">
+    <h2>5 Days Before — Low Fiber Diet</h2>
+    <p>Five (5) days before your colonoscopy, eat only low-fiber foods listed below.</p>
+  </div>
+</div>
+<div class="abox warn"><div class="ai">💊</div><div class="at"><strong>Stop Iron, Vitamins &amp; Supplements</strong><p>Please stop all Iron, Vitamins and supplements <strong>7 days</strong> prior to the procedure.</p></div></div>
+<div class="card">
+  <div class="abox info" id="buyBox"><div class="ai">🛒</div><div class="at"><strong id="buyTitle">Please Buy</strong><p id="buyText">See the prep-specific shopping list on the next page.</p></div></div>
+</div>
+
+<!-- LOW FIBER DIET TABLE -->
+<div class="card">
+  <div class="ctitle" style="color:#2E7D32;font-size:1.1rem">🥦 LOW FIBER DIET — 5 Days Before Your Colonoscopy</div>
+  <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+  <table class="lf-table">
+    <thead>
+      <tr>
+        <th class="cat-col" style="width:22%">Food Type</th>
+        <th class="yes-col" style="width:39%">✅ YES — OK to Eat</th>
+        <th class="no-col" style="width:39%">🚫 NO — Avoid</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="cat-cell">🥛 Milk &amp; Dairy</td>
+        <td class="yes-cell"><div class="yes-tag">OK to eat</div><br>Milk · Cream · Hot chocolate · Buttermilk · Cheese, including cottage cheese · Yogurt · Sour cream</td>
+        <td class="no-cell"><div class="no-tag">NO yogurt mixed with</div><br>Nuts · Seeds · Granola · Fruit with skin or seeds (such as berries)</td>
+      </tr>
+      <tr>
+        <td class="cat-cell">🍞 Bread &amp; Grains</td>
+        <td class="yes-cell"><div class="yes-tag">OK to eat</div><br>Breads and grains made with refined white flour (including rolls, muffins, bagels, pasta) · White rice · Plain crackers, such as Saltines · Low-fiber cereal (including puffed rice, cream of wheat, corn flakes)</td>
+        <td class="no-cell"><div class="no-tag">NO whole grains or high-fiber</div><br>Brown or wild rice · Whole grain bread, rolls, pasta, or crackers · Whole grain or high-fiber cereal (including granola, raisin bran, oatmeal) · Bread or cereal with nuts or seeds</td>
+      </tr>
+      <tr>
+        <td class="cat-cell">🍗 Meat / Protein</td>
+        <td class="yes-cell"><div class="yes-tag">OK to eat</div><br>Chicken/Turkey · Lamb · Lean pork · Veal · Fish and seafood · Eggs · Tofu</td>
+        <td class="no-cell"><div class="no-tag">NO</div><br>Tough meat with gristle</td>
+      </tr>
+      <tr>
+        <td class="cat-cell">🫘 Legumes</td>
+        <td class="yes-cell" style="color:#888;font-style:italic;font-size:.82rem">None allowed</td>
+        <td class="no-cell"><div class="no-tag">NO</div><br>Dried peas (including split or black-eyed) · Dried beans (including kidney, pinto, garbanzo/chickpea) · Lentils · Any other legume</td>
+      </tr>
+      <tr>
+        <td class="cat-cell">🍎 Fruits</td>
+        <td class="yes-cell"><div class="yes-tag">OK to eat</div><br>Fruit juice without pulp · Applesauce · Ripe cantaloupe and honeydew · Ripe, peeled apricots and peaches · Canned or cooked fruit without seeds or skin</td>
+        <td class="no-cell"><div class="no-tag">NO seeds, skin, or dried fruit</div><br>Raw fruit with seeds, skin, or membranes (includes berries, pineapple, apples, oranges, watermelon) · Any cooked or canned fruit with seeds or skin · Raisins or other dried fruit</td>
+      </tr>
+      <tr>
+        <td class="cat-cell">🥕 Vegetables</td>
+        <td class="yes-cell"><div class="yes-tag">OK if cooked or canned</div><br>Canned or cooked vegetables without skin or peel (includes peeled carrots, mushrooms, turnips, asparagus tips) · Potatoes without skin · Cucumbers without seeds or peel</td>
+        <td class="no-cell"><div class="no-tag">NO raw, skin, seeds, or peel</div><br>Corn · Potatoes with skin · Tomatoes · Cucumbers with seeds and peel · Cooked cabbage or Brussels sprouts · Green peas · Summer and winter squash · Lima beans · Onions</td>
+      </tr>
+      <tr>
+        <td class="cat-cell">🥜 Nuts, Nut Butter &amp; Seeds</td>
+        <td class="yes-cell"><div class="yes-tag">OK to eat</div><br>Creamy (smooth) peanut or almond butter</td>
+        <td class="no-cell"><div class="no-tag">NO nuts or seeds</div><br>Nuts including peanuts, almonds, walnuts · Chunky nut butter · Seeds such as fennel, sesame, pumpkin, sunflower</td>
+      </tr>
+      <tr>
+        <td class="cat-cell">🧈 Fats &amp; Oils</td>
+        <td class="yes-cell"><div class="yes-tag">OK to eat</div><br>Butter · Margarine · Vegetable and other oils · Mayonnaise · Salad dressings made without seeds or nuts</td>
+        <td class="no-cell"><div class="no-tag">NO</div><br>Salad dressing made with seeds or nuts</td>
+      </tr>
+      <tr>
+        <td class="cat-cell">🍵 Soups</td>
+        <td class="yes-cell"><div class="yes-tag">OK to eat</div><br>Broth, bouillon, consommé, and strained soups · Milk or cream-based soup, strained</td>
+        <td class="no-cell"><div class="no-tag">No</div><br>Unstrained soups · Chili · Lentil soup · Dried bean soup · Corn soup · Pea soup</td>
+      </tr>
+      <tr>
+        <td class="cat-cell">🍨 Desserts</td>
+        <td class="yes-cell"><div class="yes-tag">OK to eat</div><br>Custard · Plain pudding · Ice cream · Sherbet or sorbet · Jell-O or gelatin without added fruit or red or purple dye · Cookies or cake made with white flour, prepared without seeds, dried fruit, or nuts</td>
+        <td class="no-cell"><div class="no-tag">NO</div><br>Coconut flakes · Anything with seeds or nuts · Anything with added red or purple dye · Cookies or cakes made with whole grain flour, seeds, dried fruit, or nuts</td>
+      </tr>
+      <tr>
+        <td class="cat-cell">☕ Drinks &amp; Beverages</td>
+        <td class="yes-cell"><div class="yes-tag">OK to eat</div><br>Coffee · Tea · Hot chocolate or cocoa · Clear fruit drinks (no pulp) · Soda and other carbonated beverages · Ensure, Boost, or Enlive without added fiber</td>
+        <td class="no-cell"><div class="no-tag">NO</div><br>Fruit or vegetable juice with pulp · Beverages with red or purple dye</td>
+      </tr>
+      <tr>
+        <td class="cat-cell">🍬 Other</td>
+        <td class="yes-cell"><div class="yes-tag">OK to eat</div><br>Sugar · Salt · Jelly · Honey · Syrup · Lemon juice</td>
+        <td class="no-cell"><div class="no-tag">NO</div><br>Coconut · Popcorn · Jam · Marmalade · Relishes · Pickles · Olives · Stone-ground mustard</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<p style="font-size:.72rem;color:#aaa;margin:4px 13px 10px;text-align:center">Ambulatory Care Pavilion, 100 Woods Road, 3rd Floor, Valhalla NY, 10595 · Office: 914-533-4111 · Fax 914-449-1940</p>
+`;
+
+/* Shopping list per prep */
+const BUY = {
+  m1:'238-gram BOTTLE of MiraLAX · 5MG pack of Dulcolax · 64 oz Gatorade/Pedialyte/G2/Powerade (NO RED, ORANGE OR PURPLE COLORING)',
+  m2:'238-gram BOTTLE of MiraLAX · 5MG pack of Dulcolax · 64 oz Gatorade/Pedialyte/G2/Powerade (NO RED, ORANGE OR PURPLE COLORING)',
+  gl:'BOTTLE of GoLytely · 5MG pack of Dulcolax · 64 oz Gatorade/Pedialyte/G2/Powerade (NO RED, ORANGE OR PURPLE COLORING)',
+  sp:'SUPREP Prep Kit · Dulcolax® Laxative 5mg pack'
+};
+const BUY_ES = {
+  m1:'Botella de 238g de MiraLAX · Dulcolax 5mg · 64 oz de Gatorade/Pedialyte (SIN coloración roja, naranja o morada)',
+  m2:'Botella de 238g de MiraLAX · Dulcolax 5mg · 64 oz de Gatorade/Pedialyte (SIN coloración roja, naranja o morada)',
+  gl:'Botella de GoLytely · Dulcolax 5mg · 64 oz de Gatorade/Pedialyte (SIN coloración roja, naranja o morada)',
+  sp:'Kit de preparación SUPREP · Dulcolax® laxante 5mg'
+};
+
+function injectLF(key){
+  const el = document.getElementById(key+'-0');
+  if(!el) return;
+  el.innerHTML = LF_HTML;
+  const bt = el.querySelector('#buyText');
+  if(bt) bt.textContent = lang==='es' ? BUY_ES[key] : BUY[key];
+}
+
+/* ── Navigation ── */
+function show(id){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function goHome(){ show('pgHome'); }
+
+function switchLangToggle(l){
+  lang=l;
+  applyLang(l);
+  document.getElementById('togEN').classList.toggle('active', l==='en');
+  document.getElementById('togES').classList.toggle('active', l==='es');
+}
+
+function openPrep(key){
+  CUR[key]=0;
+  injectLF(key);
+  renderStep(key);
+  show(PAGES[key]);
+}
+
+function goStep(key,n){
+  CUR[key]=n;
+  renderStep(key);
+  document.getElementById(PAGES[key]).scrollIntoView({behavior:'smooth'});
+}
+
+function stepNav(key,dir){
+  const n=CUR[key]+dir;
+  if(n>=0 && n<TOTALS[key]){
+    CUR[key]=n;
+    renderStep(key);
+    document.getElementById(PAGES[key]).scrollIntoView({behavior:'smooth'});
+  }
+}
+
+function renderStep(key){
+  const pg=document.getElementById(PAGES[key]);
+  const n=CUR[key], total=TOTALS[key];
+  const t=T[lang];
+  pg.querySelectorAll('.sc').forEach((el,i)=>el.classList.toggle('on',i===n));
+  pg.querySelectorAll('.ps').forEach((el,i)=>{
+    el.classList.toggle('on',i===n);
+    el.classList.toggle('done',i<n);
+  });
+  const prev=document.getElementById(key+'prev');
+  const next=document.getElementById(key+'next');
+  const pl=document.getElementById(key+'prevlbl');
+  const nl=document.getElementById(key+'nextlbl');
+  if(prev) prev.disabled=(n===0);
+  if(next) next.disabled=(n===total-1);
+  if(pl)   pl.textContent=t.prev;
+  if(nl)   nl.textContent=(n===total-1)?(lang==='es'?'¡Listo!':'Done!'):t.next;
+  if(next) next.style.background=(n===total-1)?'var(--green)':'var(--teal)';
+}
+
+function togMed(btn){
+  btn.classList.toggle('open');
+  btn.nextElementSibling.classList.toggle('open');
+}
+
+function applyLang(l){
+  const t=T[l];
+  Object.entries(t).forEach(([k,v])=>{
+    const el=document.getElementById(k);
+    if(el) el.textContent=v;
+  });
+  // Update shopping list text in any already-rendered step 0s
+  Object.keys(CUR).forEach(k=>{ injectLF(k); });
+  Object.keys(CUR).forEach(k=>renderStep(k));
+}
+
+const T={
+  en:{
+    menuTitle:'Choose Your Prep',
+    menuSub:'Select the prep your doctor prescribed',
+    m1btn:'MiraLAX — 1x Day Prep',     m1btnsub:'Single evening dose',
+    m2btn:'MiraLAX — 2x Day Prep',     m2btnsub:'Split dose: evening + morning',
+    glbtn:'GoLytely Prep',             glbtnsub:'Split dose: evening + morning',
+    spbtn:'SUPREP Prep',               spbtnsub:'Split dose: evening + morning',
+    medbtn:'General Medication Directions', medbtnsub:'Diabetes, insulin, blood thinners & more',
+    medBack:'← Back to Menu',
+    prev:'Back', next:'Next'
+  },
+  es:{
+    menuTitle:'Elija su Preparación',
+    menuSub:'Seleccione la preparación que su médico recetó',
+    m1btn:'MiraLAX — Dosis 1 vez al día',    m1btnsub:'Dosis única en la tarde',
+    m2btn:'MiraLAX — Dosis 2 veces al día',  m2btnsub:'Dosis dividida: tarde + mañana',
+    glbtn:'Preparación con GoLytely',         glbtnsub:'Dosis dividida: tarde + mañana',
+    spbtn:'Preparación con SUPREP',           spbtnsub:'Dosis dividida: tarde + mañana',
+    medbtn:'Instrucciones Generales de Medicamentos', medbtnsub:'Diabetes, insulina, anticoagulantes y más',
+    medBack:'← Volver al Menú',
+    prev:'Atrás', next:'Siguiente'
+  }
+};
+</script>
+</body>
+</html>
